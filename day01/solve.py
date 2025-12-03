@@ -36,7 +36,7 @@ def part2(filename: str) -> int:
         nb += z
     return nb
 
-os.chdir('/home/dmorineau/Data/depots/perso/Adventofcode2025/day01')
+os.chdir(os.path.expanduser('~/Data/depots/perso/Adventofcode2025/day01'))
 
 print("part 1:")
 print(f"sample: {part1('sample')}")

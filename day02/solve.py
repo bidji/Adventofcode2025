@@ -39,7 +39,7 @@ def get_ranges(filename: str) -> list[RangeId]:
                 ranges.append(RangeId(r))
     return ranges
 
-os.chdir('/home/dmorineau/Data/depots/perso/Adventofcode2025/day02')
+os.chdir(os.path.expanduser('~/Data/depots/perso/Adventofcode2025/day02'))
 
 def sum_invalids(filename: str, version: int) -> int:
     sum = 0
