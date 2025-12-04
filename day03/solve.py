@@ -1,4 +1,3 @@
-import math
 import os
 
 def get_banks(filename: str) -> list[str]:
