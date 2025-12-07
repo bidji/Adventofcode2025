@@ -12,7 +12,7 @@ def rotate(starting: int, rotation: str) -> int:
         # negative modifier and value reached at least 0
         z = int(value * -1 / 100)
         if starting != 0:
-            # we pass through 0 goind to negative value
+            # we pass through 0 going to negative value
             z += 1
     if modifier > 0 and value > 99:
         # positive modifier and value reached at least 100 (which means 0)
