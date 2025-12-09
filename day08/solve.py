@@ -21,9 +21,7 @@ def find_circuits(circuits: list[set[int]], pair: tuple[int]) -> list[set[int]]:
             founds.append(circuit)
     return founds
 
-def build_circuits(closest_boxes: list[list[int]]):
-    circuits = []
-    
+def build_circuits(circuits: list[set[int]], closest_boxes: list[set[int]]):
     for pair in closest_boxes:
         founds = find_circuits(circuits, pair)
         if len(founds) == 0:
@@ -56,7 +54,7 @@ def part1(filename: str, nb_iter: int) -> int:
     for n in range(nb_iter):
         closest_boxes.append(data[distances[n]])
 
-    circuits = build_circuits(closest_boxes)
+    circuits = build_circuits([], closest_boxes)
         
     lengths = [len(circuit) for circuit in circuits]
     lengths.sort(reverse=True)
@@ -66,9 +64,40 @@ def part1(filename: str, nb_iter: int) -> int:
         length *= lengths[n]
         
     return length
+
+def part2(filename: str, nb_iter: int) -> int:
+    positions = get_positions(filename)
+    
+    data = dict()
+    for i in range(len(positions[:-1])):
+        for j in range(i + 1, len(positions)):
+            distance = euclidean_distance(positions[i], positions[j])
+            data[distance] = (i, j)
+    distances = list(data.keys())
+    distances.sort()
+    
+    # initialization
+    closest_boxes = []
+    for n in range(nb_iter):
+        closest_boxes.append(data[distances[n]])
+    circuits = build_circuits([], closest_boxes)
+        
+    for distance in distances[nb_iter:]:
+        closest_pair = data[distance]
+        circuits = build_circuits(circuits, [closest_pair])
+        if len(circuits) == 1 and len(circuits[0]) == len(positions):
+            x0, _, _ = positions[closest_pair[0]]
+            x1, _, _ = positions[closest_pair[1]]
+            return x0 * x1
+    
+    return 0
     
 os.chdir(os.path.expanduser('~/Data/depots/perso/Adventofcode2025/day08'))
 
 print("part 1:")
 print(part1('sample', 10))
 print(part1('input', 1000))
+
+print("\npart 2:")
+print(part2('sample', 10))
+print(part2('input', 1000))
